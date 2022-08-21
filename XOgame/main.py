@@ -1,4 +1,5 @@
-
+# Адыев Тимур FPW-85 Skillfactory
+# решение задачи крестики-нолики
 
 
 # winning combination options
