@@ -1,0 +1,76 @@
+Index: ../practice_C1/testRectangle.py
+===================================================================
+diff --git a/../practice_C1/testRectangle.py b/../practice_C1/points.py
+rename from ../practice_C1/testRectangle.py
+rename to ../practice_C1/points.py
+--- a/../practice_C1/testRectangle.py	
++++ b/../practice_C1/points.py	
+@@ -1,0 +1,17 @@
++class Dot:
++    def __init__(self, x, y):
++        self.x = x
++        self.y = y
++
++    def __eq__(self, other):
++        return self.x == other.x and self.y == other.y
++
++    def __str__(self):
++        return f'Dot: {self.x, self.y}'
++
++
++p1=Dot(1,2)
++p2=Dot(1,2)
++print(p1==p2)
++print(str(p1))
++print(p2)
+\ No newline at end of file
+Index: ../practice_C1/Rectangle.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>class Rectangle:\r\n    def __init__(self, width, heigth):\r\n        self.width = width\r\n        self.height = heigth\r\n\r\n    def get_width(self):\r\n        return self.width\r\n\r\n    def get_height(self):\r\n        return self.height\r\n\r\n    # Метод, рассчитывающий площадь\r\n    def get_area(self):\r\n        return self.width * self.height
+===================================================================
+diff --git a/../practice_C1/Rectangle.py b/../practice_C1/Rectangle.py
+--- a/../practice_C1/Rectangle.py	
++++ b/../practice_C1/Rectangle.py	
+@@ -1,14 +1,29 @@
++import math
++
++
+ class Rectangle:
+-    def __init__(self, width, heigth):
+-        self.width = width
+-        self.height = heigth
+-
+-    def get_width(self):
+-        return self.width
++    def __init__(self, a, b):
++        self.a = a
++        self.b = b
+ 
+-    def get_height(self):
+-        return self.height
+-
+-    # Метод, рассчитывающий площадь
+     def get_area(self):
+-        return self.width * self.height
+\ No newline at end of file
++        return self.a * self.b
++
++    def __eq__(self, other):
++        return (self.a == other.a and self.b == other.b) or (self.a == other.b and self.b == other.a)
++
++
++class Square:
++    def __init__(self, a):
++        self.a = a
++
++    def get_area_square(self):
++        return self.a ** 2
++
++
++class Circle:
++    def __init__(self, r):
++        self.r = r
++
++    def get_area_circle(self):
++        return math.pi * self.r ** 2
