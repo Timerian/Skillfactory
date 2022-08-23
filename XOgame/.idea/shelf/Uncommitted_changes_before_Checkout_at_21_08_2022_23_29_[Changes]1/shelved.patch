@@ -1,0 +1,62 @@
+Index: ../practice_C1/rectangle_2.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../practice_C1/rectangle_2.py b/../practice_C1/rectangle_2.py
+new file mode 100644
+--- /dev/null	
++++ b/../practice_C1/rectangle_2.py	
+@@ -0,0 +1,23 @@
++from Rectangle import Rectangle, Square, Circle
++
++rect_1 = Rectangle(3, 4)
++rect_2 = Rectangle(4, 3)
++
++square_1 = Square(5)
++square_2 = Square(10)
++
++circle_1 = Circle(5)
++
++figures = [rect_1, rect_2, square_1, square_2, circle_1]
++
++for figure in figures:
++    if isinstance(figure, Square):
++        print(figure.get_area_square())
++    elif isinstance(figure, Rectangle):
++        print(figure.get_area())
++    else:
++        print(figure.get_area_circle())
++
++print(rect_1 == rect_2)
++
++
+Index: ../practice_C1/practice_C1.10.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../practice_C1/practice_C1.10.py b/../practice_C1/practice_C1.10.py
+new file mode 100644
+--- /dev/null	
++++ b/../practice_C1/practice_C1.10.py	
+@@ -0,0 +1,19 @@
++class Clients:
++    def __init__(self, name, surname, city, balance):
++        self.name = name
++        self.surname = surname
++        self.city = city
++        self.balance = balance
++
++    def __str__(self):
++        return f'{self.name} {self.surname}. {self.city}. Баланс: {self.balance} рублей.'
++
++    def get_info(self):
++        return f'{self.name} {self.surname}. {self.city}.'
++
++
++cl_1 = Clients('Вася', 'Пупкин', 'Усть-пиздюйск', -1000)
++
++print(cl_1)
++print(cl_1.get_info())
++
