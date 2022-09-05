@@ -1,6 +1,11 @@
+# Адыев Тимур FPW-85 Skillfactory
+# решение задачи Морской бой
+
+
 from random import randint
 
 
+# creating user classes of exceptions
 class BoardException(Exception):
     pass
 
@@ -19,6 +24,7 @@ class BoardWrongShipException(BoardException):
     pass
 
 
+# creating class of dots, which give us more useful format of coordinates
 class Dot:
     def __init__(self, x, y):
         self.x = x
@@ -31,6 +37,7 @@ class Dot:
         return f"Dot({self.x}, {self.y})"
 
 
+#  class Ships which include all information about ships and methods of creating ships on the board
 class Ship:
     def __init__(self, head, l, orient):
         self.l = l
@@ -54,6 +61,8 @@ class Ship:
         return ship_coord
 
 
+# class Board contains methods that adding ships on the board, checking coordinates of ships, contours,..
+# ... making shot and etc.
 class Board:
     def __init__(self, hide=False, size=6):
         self.hide = hide
@@ -133,6 +142,7 @@ class Board:
         self.buzy = []
 
 
+# class Player contains boards of both players(User, Computer), request coordinates of shots (move)
 class Player:
     def __init__(self, board, enemy):
         self.board = board
@@ -178,6 +188,7 @@ class User(Player):
             return Dot(x - 1, y - 1)
 
 
+# class Game combines all methods of previous classes for working process
 class Game:
     def __init__(self, size = 6):
         self.size = size
