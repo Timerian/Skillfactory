@@ -1,0 +1,17 @@
+{% extends 'flatpages/default.html' %}
+ 
+{% block title %}
+{{ flatpage.title }}
+{% endblock title %}
+ 
+{% block content %}
+    <h2>{{ flatpage.title }}</h2>
+    <hr>
+{{ flatpage.content }}
+<div style="display: inline-block">
+    <h3>and</h3>
+    <h1>AGAIN</h1>
+</div>
+<p></p>
+<mark><ins>{{ flatpage.content }}</ins></mark>
+{% endblock content %}

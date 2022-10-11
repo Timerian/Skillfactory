@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Django Project - {% block title %} {% endblock title %}</title>
+
+        {% load static %}
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    </head>
+    <body>
+        <!-- Responsive navbar-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#!">Home Work D1.6</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/check/">Are you admin?</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="/about/">About</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="/contacts/">My contacts</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Header - set the background image for the header in the line below-->
+        <header class="py-5 bg-image-full" style="background-image: url('https://sun9-69.userapi.com/impf/c626817/v626817767/22749/AfmxcFD06XY.jpg?size=2560x683&quality=96&sign=049bd5f01445de7a24ba076fb3515656&type=album')">
+            <div class="text-center my-5">
+                <img class="img-fluid rounded-circle mb-4" src="https://sun9-69.userapi.com/impg/XrXOdREV3Z6s2sOdtD79ti8Onx_tKKMcNKJXFQ/ubQqTNMBoSI.jpg?size=150x150&quality=95&sign=d2c02de8fe1d169c163a6ec98ce98d74&type=album" alt="..." />
+                <h1 class="text-white fs-3 fw-bolder">Timerian</h1>
+                <p class="text-white-50 mb-0">SkillFactory Student</p>
+            </div>
+        </header>
+        <!-- Content section-->
+        <section class="py-5">
+            <div class="container my-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <p style= "m-0 text-center text-black" >
+                            {% block content %}
+                            {{ flatpage.content }}
+                            {% endblock content %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Footer-->
+        <footer class="py-5 bg-dark">
+            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Home Work Django Project 2022</p></div>
+        </footer>
+    </body>
+</html>

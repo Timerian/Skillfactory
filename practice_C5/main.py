@@ -1,16 +1,12 @@
-# This is a sample Python script.
+import requests
+import lxml.html
+from lxml import etree
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+html = requests.get('https://www.python.org/').content
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+tree = etree.parse('Welcome to Python.org.html', lxml.html.HTMLParser())
+ul = tree.findall('/body/div/div[3]/div/section/div[2]/div[1]/div/ul/li')
+for li in ul:
+    a = li.find('a')
+    title = li.find('time')
+    print(title.get('datetime'))
