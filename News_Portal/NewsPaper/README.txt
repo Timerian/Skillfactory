@@ -4,5 +4,6 @@
 Koмментарии:
 - Основной код фильтра censor расположен в директории: news/templatetags/ExplicitFilter/main.py
 - Этот код импортируется в custom_filters.py и используется для обработки текста в фильтре censor.
+- Для фильтрации используется набор слов (только на английском языке) из файла в директории: news/templatetags/ExplicitFilter/expwords.txt
 
 Спасибо за вашу работу!
