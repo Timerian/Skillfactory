@@ -1,0 +1,21 @@
+<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+<!-- Название у нас будет Product -->
+{% block title %}
+Post
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим сам товар, идентификатор которого был передан в url -->
+{% block content %}
+<h3>Author: {{ post.author.authorUser.username }}. {{ post.author.ratingAuthor }}</h3>
+<h5>{{ post.is_type }}</h5>
+<h5>{{ post.is_category }}</h5>
+<h5>Date of publication: {{ post.time_add|date:'d.M.Y' }}</h5>
+<h5>Rating: {{ post.rating }}</h5>
+<h5>{{ post.head|censor }}</h5>
+<h5>{{ post.text|censor }}</h5>
+
+{% endblock content %}

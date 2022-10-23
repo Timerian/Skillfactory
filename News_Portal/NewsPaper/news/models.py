@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Sum
+from datetime import datetime
 
 
 # Types of posts
@@ -31,17 +32,24 @@ class Author(models.Model):
         self.ratingAuthor = post_rate * 3 + x + com_rate
         self.save()
 
+    def __str__(self):
+        return f'{self.authorUser.username}.\n' \
+               f'Rating: {self.ratingAuthor}.'
+
 
 # create class Category
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
 
+#    def __str__(self):
+#        return self.name
+
 
 # create class Post
 class Post(models.Model):
     TYPE = [
-        (article, "Статья"),
-        (news, "Новости")
+        (article, "Article"),
+        (news, "News")
     ]
 
     type = models.CharField(max_length=1, choices=TYPE, default=news)
@@ -63,6 +71,27 @@ class Post(models.Model):
 
     def preview(self):
         return self.text[0:30] + '...'
+
+    def is_type(self):
+        for k in self.TYPE:
+            if self.type == k[0]:
+                return k[1]
+
+    def __str__(self):
+        return f'Author: {self.author}\n' \
+               f'Head: {self.head}\n' \
+               f'Rating of post: {self.rating}\n'
+
+    def is_category(self):
+        k = ''
+        for i in self.categories.all():
+            if not k:
+                k += f'{i.name}'
+            else:
+                k += f', {i.name}'
+        return f'Categories: {k}'
+
+
 
 
 # table for connect tables Post and Category
@@ -87,3 +116,13 @@ class Comment(models.Model):
     def dislike(self):
         self.rating -= 1
         self.save()
+
+    def preview(self):
+        return self.text[0:30] + '...'
+
+    def __str__(self):
+        return f'{self.user.username}\n' \
+               f'{self.post.head}\n' \
+               f'Рейтинг публикации: {self.rating}\n' \
+               f'{self.time_add}\n' \
+               f'{self.preview()}'
