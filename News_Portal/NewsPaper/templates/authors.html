@@ -9,5 +9,25 @@ Authors
 <!-- В контенте на странице мы выводим все товары -->
 {% block content %}
 <h1>All authors</h1>
-{{ authors }}
+<h3>Amount of authors: {{ authors|length }}</h3>
+<hr>
+    {% if authors %}
+        <table>
+            <tr>
+                <td>Name</td>
+                <td>Rating</td>
+                <
+            </tr>
+
+            {% for author in authors %}
+            <tr>
+                <td>{{ author.authorUser.username }}</td>
+                <td>{{ author.ratingAuthor }}</td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    {% else %}
+        <h2>Товаров нет!</h2>
+    {% endif %}
 {% endblock content %}

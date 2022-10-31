@@ -9,5 +9,24 @@ Categories
 <!-- В контенте на странице мы выводим все товары -->
 {% block content %}
 <h1>All categories</h1>
-{{ categories }}
+<h3>Amount of categories: {{ categories|length }}</h3>
+<hr>
+    {% if categories %}
+        <table>
+            <tr>
+                <td>Name</td>
+                <td>Amount of posts</td>
+            </tr>
+
+            {% for category in categories %}
+            <tr>
+                <td>{{ category.name }}</td>
+                <td>{{ category.post_set.all|length }}</td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    {% else %}
+        <h2>No categories</h2>
+    {% endif %}
 {% endblock content %}

@@ -1,20 +1,101 @@
-from django.views.generic import ListView, DetailView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Author, Post, Category, Comment
-
-# Create your views here.
+from .filters import PostFilter
+from .forms import ArticleForm, NewsForm
 
 
 class PostsList(ListView):
     model = Post
-    ordering = 'time_add'
+    ordering = '-time_add'
     template_name = 'posts.html'
     context_object_name = 'posts'
+    paginate_by = 10
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        self.filterset = PostFilter(self.request.GET, queryset)
+        return self.filterset.qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['filterset'] = self.filterset
+        return context
 
 
 class PostDetail(DetailView):
     model = Post
     template_name = 'post.html'
     context_object_name = 'post'
+
+
+class PostCreate(CreateView):
+    model = Post
+    template_name = 'post_edit.html'
+    # def form_valid(self, form):
+    #     post = form.save(commit=False)
+    #     post.type = 'A'
+    #     return super().form_valid(form)
+
+
+class PostUpdate(UpdateView):
+    model = Post
+    template_name = 'post_edit.html'
+
+
+class PostDelete(DeleteView):
+    model = Post
+    template_name = 'post_delete.html'
+
+
+class NewsList(PostsList, ListView):
+    pass
+
+
+class NewsDetail(PostDetail, DetailView):
+    pass
+
+
+class NewsCreate(PostCreate, CreateView):
+    form_class = NewsForm
+
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.type = 'N'
+        return super().form_valid(form)
+
+
+class NewsUpdate(PostUpdate, UpdateView):
+    form_class = NewsForm
+
+
+class NewsDelete(PostDelete, DeleteView):
+    success_url = reverse_lazy('news_list')
+
+
+class ArticlesList(PostsList, ListView):
+    pass
+
+
+class ArticleDetail(PostDetail, DetailView):
+    pass
+
+
+class ArticleCreate(PostCreate, CreateView):
+    form_class = NewsForm
+
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.type = 'A'
+        return super().form_valid(form)
+
+
+class ArticleUpdate(PostUpdate, UpdateView):
+    form_class = NewsForm
+
+
+class ArticleDelete(PostDelete, DeleteView):
+    success_url = reverse_lazy('articles_list')
 
 
 class AuthorsList(ListView):

@@ -5,6 +5,8 @@ from datetime import datetime
 
 
 # Types of posts
+from django.urls import reverse
+
 article = 'A'
 news = 'N'
 
@@ -41,8 +43,8 @@ class Author(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
 
-#    def __str__(self):
-#        return self.name
+    def __str__(self):
+        return self.name
 
 
 # create class Post
@@ -91,16 +93,18 @@ class Post(models.Model):
                 k += f', {i.name}'
         return f'Categories: {k}'
 
+    def get_absolute_url(self):
+        return reverse('post_detail', args=[str(self.id)])
 
 
+# class Article(models.Model, Post):
 
-# table for connect tables Post and Category
+
 class PostCategory(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
 
-# create class Comment
 class Comment(models.Model):
     text = models.TextField()
     time_add = models.DateTimeField(auto_now_add=True)

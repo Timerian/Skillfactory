@@ -1,13 +1,37 @@
-<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
 {% extends 'flatpages/default.html' %}
 
-<!-- Название у нас будет products -->
 {% block title %}
 Comments
 {% endblock title %}
 
-<!-- В контенте на странице мы выводим все товары -->
+{% load custom_filters %}
+
 {% block content %}
 <h1>All comments</h1>
-{{ comments }}
+<h3>Amount of comments: {{ comments|length }}</h3>
+<hr>
+    {% if comments %}
+        <table>
+            <tr>
+                <td>User</td>
+                <td>Head</td>
+                <td>Rating</td>
+                <td>Time</td>
+                <td>Preview</td>
+            </tr>
+
+            {% for comment in comments %}
+            <tr>
+                <td>{{ comment.user.username }}</td>
+                <td>{{ comment.post.head|censor }}</td>
+                <td>{{ comment.rating }}</td>
+                <td>{{ comment.time_add|date:'d.m.Y' }}</td>
+                <td>{{ comment.preview|censor }}</td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    {% else %}
+        <h2>Товаров нет!</h2>
+    {% endif %}
 {% endblock content %}

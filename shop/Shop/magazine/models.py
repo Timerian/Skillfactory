@@ -72,9 +72,3 @@ class ProductOrder(models.Model):
         self._amount = int(value) if value >= 0 else 0
         self.save()
 
-
-twist_pair = Product(name='Витая пара(3м)', price='993.0')
-twist_pair.save()
-
-kbrd = Product.objects.create(name='Клавиатура', price='1060.0')
-
