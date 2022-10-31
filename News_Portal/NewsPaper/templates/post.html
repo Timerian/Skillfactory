@@ -17,5 +17,14 @@ Post
 <h5>Rating: {{ post.rating }}</h5>
 <h5>{{ post.head|censor }}</h5>
 <h5>{{ post.text|censor }}</h5>
+<hr>
+<ul>
+    <form action="{{ post.pk }}/delete" method="get">
+            <input type="submit" value="Delete"/>
+    </form>
+    <form action="{{ post.pk }}/update" method="get">
+        <input type="submit" value="Update"/>
+    </form>
+</ul>
 
 {% endblock content %}
