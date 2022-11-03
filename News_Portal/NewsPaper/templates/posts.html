@@ -17,12 +17,21 @@ Posts
         <input type="submit" value="Найти" />
     </form>
 <hr>
+    {% if perms.news.add_post %}
+        <form action="create" method="get">
+            <input type="submit" value="Add publication" />
+        </form>
+    {% endif %}
+
     {% if posts %}
-        <table>
+        <table align="center">
             <tr>
                 <td>Head</td>
                 <td>Time of publication</td>
                 <td>Preview</td>
+                {% if perms.news.change_post or perms.news.delete_post %}
+                <td>Actions</td>
+                {% endif %}
             </tr>
 
             {% for post in posts %}
@@ -30,6 +39,14 @@ Posts
                 <td><a href="{{ post.pk }}">{{ post.head|censor }}</a></td>
                 <td>{{ post.time_add|date:'d.M.Y'}}</td>
                 <td>{{ post.text|truncatewords:20|censor }}</td>
+                <td>
+                    {% if perms.news.change_post %}
+                        <a href="{{ post.pk }}/update">Change</a>
+                    {% endif %}
+                    {% if perms.news.delete_post %}
+                        <a href="{{ post.pk }}/delete">Delete</a>
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
 

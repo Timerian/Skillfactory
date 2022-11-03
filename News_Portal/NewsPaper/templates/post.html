@@ -19,12 +19,16 @@ Post
 <h5>{{ post.text|censor }}</h5>
 <hr>
 <ul>
+    {% if perms.news.delete_post %}
     <form action="{{ post.pk }}/delete" method="get">
-            <input type="submit" value="Delete"/>
+        <input type="submit" value="Delete"/>
     </form>
+    {% endif %}
+    {% if perms.news.change_post %}
     <form action="{{ post.pk }}/update" method="get">
         <input type="submit" value="Update"/>
     </form>
+    {% endif %}
 </ul>
 
 {% endblock content %}

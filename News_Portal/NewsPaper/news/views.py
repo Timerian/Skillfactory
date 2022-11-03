@@ -3,6 +3,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .models import Author, Post, Category, Comment
 from .filters import PostFilter
 from .forms import ArticleForm, NewsForm
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
 class PostsList(ListView):
@@ -29,7 +30,8 @@ class PostDetail(DetailView):
     context_object_name = 'post'
 
 
-class PostCreate(CreateView):
+class PostCreate(PermissionRequiredMixin, CreateView):
+    permission_required = 'news.add_post'
     model = Post
     template_name = 'post_edit.html'
     # def form_valid(self, form):
@@ -38,12 +40,14 @@ class PostCreate(CreateView):
     #     return super().form_valid(form)
 
 
-class PostUpdate(UpdateView):
+class PostUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required = 'news.change_post'
     model = Post
     template_name = 'post_edit.html'
 
 
-class PostDelete(DeleteView):
+class PostDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = 'news.delete_post'
     model = Post
     template_name = 'post_delete.html'
 
@@ -82,7 +86,7 @@ class ArticleDetail(PostDetail, DetailView):
 
 
 class ArticleCreate(PostCreate, CreateView):
-    form_class = NewsForm
+    form_class = ArticleForm
 
     def form_valid(self, form):
         post = form.save(commit=False)
@@ -91,7 +95,7 @@ class ArticleCreate(PostCreate, CreateView):
 
 
 class ArticleUpdate(PostUpdate, UpdateView):
-    form_class = NewsForm
+    form_class = ArticleForm
 
 
 class ArticleDelete(PostDelete, DeleteView):

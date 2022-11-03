@@ -29,27 +29,46 @@ Products
 
 <h3>{% current_time '%b %d %Y' %}</h3>
 <h3> {{ next_sale|default_if_none:"Чуть позже сообщим о распродаже!" }} </h3>
-    <hr>
+<hr>
+    {% if perms.simpleapp.add_product %}
+    <a href="create">Добавить товар</a>
+    {% endif %}
+
     {% if products %}
-        <table>
+        <center>
+        <table >
             <tr>
-                <td>Название</td>
-                <td>Описание</td>
-                <td>Категория</td>
-                <td>Цена</td>
-                <td>Количество</td>
+                <td align="center">Название</td>
+                <td align="center">Описание</td>
+                <td align="center">Категория</td>
+                <td align="center">Цена</td>
+                <td align="center">Количество</td>
+                {% if perms.simpleapp.change_product or perms.simpleapp.delete_product %}
+                <td align="center">Действия</td>
+                {% endif %}
             </tr>
             {% for product in products %}
             <tr>
-                <td>{{ product.name }}</td>
-                <td>{{ product.description|truncatechars:15 }}</td>
-                <td>{{ product.category.name }}</td>
-                <td>{{ product.price|currency:'usd' }}</td>
-                <td>{{ product.quantity }}</td>
+                <td align="center">{{ product.name }}</td>
+                <td align="center">{{ product.description|truncatechars:15 }}</td>
+                <td align="center">{{ product.category.name }}</td>
+                <td align="center">{{ product.price|currency:'usd' }}</td>
+                <td align="center">{{ product.quantity }}</td>
+
+                <td align="center">
+                    {% if perms.simpleapp.change_product %}
+                    <a href="{{ product.pk }}/update">Изменить</a>
+                    {% endif %}
+                    {% if perms.simpleapp.delete_product %}
+                    <a href="{{ product.pk }}/delete">Удалить</a>
+                    {% endif %}
+                </td>
+
             </tr>
             {% endfor %}
 
         </table>
+        </center>
     {% else %}
        <h2>Товаров нет!</h2>
     {% endif %}
