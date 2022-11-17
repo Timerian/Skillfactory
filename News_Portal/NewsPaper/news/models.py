@@ -35,16 +35,16 @@ class Author(models.Model):
         self.save()
 
     def __str__(self):
-        return f'{self.authorUser.username}.\n' \
-               f'Rating: {self.ratingAuthor}.'
+        return f'{self.authorUser.username}'
 
 
 # create class Category
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
+    subscribers = models.ManyToManyField(User, related_name='categories')
 
     def __str__(self):
-        return self.name
+        return f'{self.name}'
 
 
 # create class Post
@@ -91,18 +91,18 @@ class Post(models.Model):
                 k += f'{i.name}'
             else:
                 k += f', {i.name}'
-        return f'Categories: {k}'
+        return f'{k}'
 
     def get_absolute_url(self):
         return reverse('post_detail', args=[str(self.id)])
 
 
-# class Article(models.Model, Post):
-
-
 class PostCategory(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.post.head} | {self.category}'
 
 
 class Comment(models.Model):

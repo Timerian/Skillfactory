@@ -16,12 +16,18 @@ Categories
             <tr>
                 <td>Name</td>
                 <td>Amount of posts</td>
+                <td>Actions</td>
             </tr>
 
             {% for category in categories %}
             <tr>
                 <td>{{ category.name }}</td>
                 <td>{{ category.post_set.all|length }}</td>
+                <td>
+                    <form action="" method="get">
+                        <a href="{% url 'subscribe' category.id %}" class="button">Subscribe</a>
+                    </form>
+                </td>
             </tr>
             {% endfor %}
 

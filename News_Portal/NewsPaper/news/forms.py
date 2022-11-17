@@ -12,10 +12,6 @@ class BasePostForm(forms.ModelForm):
             'categories',
             'author'
         ]
-    # head = cleaned_data.get('head')
-    # type = cleaned_data.get('type')
-    # text = cleaned_data.get('text')
-    # categories = cleaned_data.get('categories')
 
     def set_fields(self, data):
         # The temporary data for checking the uniqueness of the value of the fields
@@ -44,4 +40,8 @@ class ArticleForm(BasePostForm, forms.ModelForm):
 
 
 class NewsForm(BasePostForm, forms.ModelForm):
+    pass
+
+
+class SubscribeForm(forms.ModelForm):
     pass

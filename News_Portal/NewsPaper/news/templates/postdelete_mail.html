@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The publication</title>
+</head>
+<body>
+    <h2>The publication ({{ post.head }} by {{ post.author }}) was deleted.</h2>
+    <hr>
+    <h3>{{ post.head }}</h3>
+    <p>{{ post.text|truncatewords:50}}</p>
+</body>
+</html>

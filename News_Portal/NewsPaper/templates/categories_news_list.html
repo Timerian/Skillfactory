@@ -1,18 +1,19 @@
-<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
 {% extends 'flatpages/default.html' %}
 
 {% load custom_filters %}
 
 {% block title %}
-Posts
+{{ category }}
 {% endblock title %}
 
 {% block content %}
-<h1>All publications</h1>
+
+<h1>{{ category }}</h1>
+<a href="{% url 'subscribe' category.id %}" class="button">Subscribe to category</a>
 <h3>Amount of publications: {{ posts|length }}</h3>
     <form action="" method="get">
         {{ filterset.form.as_p }}
-        <input type="submit" value="Search" />
+        <input type="submit" value="Найти" />
     </form>
 <hr>
     {% if perms.news.add_post %}
@@ -21,11 +22,10 @@ Posts
         </form>
     {% endif %}
 
-    {% if posts %}
+    {% if categories_news_list %}
         <table align="center">
             <tr>
                 <td>Head</td>
-                <td>Categories</td>
                 <td>Time of publication</td>
                 <td>Preview</td>
                 {% if perms.news.change_post or perms.news.delete_post %}
@@ -33,14 +33,9 @@ Posts
                 {% endif %}
             </tr>
 
-            {% for post in posts %}
+            {% for post in categories_news_list %}
             <tr>
                 <td><a href="{{ post.pk }}">{{ post.head|censor }}</a></td>
-                <td>
-                    {% for category in post.categories.all %}
-                    <a href="/categories/{{category.id}}">{{ category }}</a>
-                    {% endfor %}
-                </td>
                 <td>{{ post.time_add|date:'d.M.Y'}}</td>
                 <td>{{ post.text|truncatewords:20|censor }}</td>
                 <td>
@@ -48,7 +43,7 @@ Posts
                         <a href="{{ post.pk }}/update">Change</a>
                     {% endif %}
                     {% if perms.news.delete_post %}
-                        <a href="{{ post.pk }}/delete">Delete</a>
+                        <a href="/news/{{ post.pk }}/delete">Delete</a>
                     {% endif %}
                 </td>
             </tr>
@@ -60,11 +55,11 @@ Posts
     {% endif %}
 
     {% if page_obj.has_previous %}
-       <a href="?page=1">1</a>
-       {% if page_obj.previous_page_number != 1 %}
-           ...
-           <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
-       {% endif %}
+        <a href="?page=1">1</a>
+        {% if page_obj.previous_page_number != 1 %}
+            ..
+            <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+        {% endif %}
    {% endif %}
 
    {{ page_obj.number }}

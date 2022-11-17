@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Publications for the week</title>
+</head>
+<body>
+    <h2>Hello, {{ username }}. There is publications of the last week in your favorite categories!</h2>
+    <hr>
+    {% for category in categories %}
+        <h3>{{ category.name }}</h3>
+        <ul>
+            {% for post in post_list %}
+            <li><a href="http://127.0.0.1:8000/news/{{ post.pk }}">{{ post.head }}</a> by {{ post.author.authorUser.username }}</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+</body>
+</html>

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New publication</title>
+</head>
+<body>
+    <h2>Hello, {{ user.first_name }}. There is a new publication in your favorite category!</h2>
+    <hr>
+    <h3>{{ post.head }}</h3>
+    <p>{{ post.text|truncatewords:50}}</p>
+</body>
+</html>

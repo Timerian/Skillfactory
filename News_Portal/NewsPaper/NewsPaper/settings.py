@@ -13,16 +13,19 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-import django.template.context_processors
+from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv()
+env_path = Path('')/'.env'
+load_dotenv(dotenv_path=env_path)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&&68n6z!r*^i(pkp@s)ze00u4x#ju((_9-k*()(jy216#98*z='
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,15 +42,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'news',
+
+    'news.apps.NewsConfig',
     'accounts',
+
     'django.contrib.flatpages',
     'django.contrib.sites',
     'django_filters',
+
     'allauth',
     'allauth.socialaccount',
     'allauth.account',
-    'allauth.socialaccount.providers.yandex'
+    'allauth.socialaccount.providers.yandex',
+
+    'django_apscheduler'
 ]
 
 SITE_ID = 1
@@ -87,7 +95,7 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -157,3 +165,14 @@ LOGIN_REDIRECT_URL = '/news'
 LOGOUT_REDIRECT_URL = '/accounts/login'
 
 ACCOUNT_FORMS = {"signup": "accounts.forms.CustomSignupForm"}
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_USE_SSL = True
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER + '@yandex.ru'
+
+MANAGERS = [('Timur', 'ad.tmoor@gmail.com'), ('Timur', 'adyev.timur2010@yandex.ru')]
+SERVER_EMAIL = os.getenv('SERVER_EMAIL')
