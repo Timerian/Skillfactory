@@ -1,15 +1,17 @@
 from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from .models import Author, Post, Category, Comment
 from .filters import PostFilter
 from .forms import ArticleForm, NewsForm
+from .tasks import hello, postcreate_notify
 
 
 @login_required
@@ -36,6 +38,12 @@ def limit_notify(post):
         return success_url
     else:
         return False
+
+
+class IndexView(View):
+    def get(self, request):
+        hello.delay()
+        return HttpResponse('Hello')
 
 
 class PostsList(ListView):
@@ -98,6 +106,7 @@ class NewsCreate(PostCreate, CreateView):
             return HttpResponseRedirect(link)
         else:
             result = super().form_valid(form)
+            postcreate_notify.apply_async([post.pk], countdown=30)
             return result
 
 
@@ -128,6 +137,7 @@ class ArticleCreate(PostCreate, CreateView):
             return HttpResponseRedirect(link)
         else:
             result = super().form_valid(form)
+            postcreate_notify.apply_async([post.pk], countdown=30)
             return result
 
 

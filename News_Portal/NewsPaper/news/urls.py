@@ -3,7 +3,7 @@ from django.urls import path
 from .views import (CategoriesList, AuthorsList, CommentsList, NewsList, ArticlesList, CategoryNewsList,
                     AuthorDetail, NewsDetail, CommentDetail, ArticleDetail,
                     NewsCreate, NewsUpdate, NewsDelete,
-                    ArticleCreate, ArticleUpdate, ArticleDelete, subscribe)
+                    ArticleCreate, ArticleUpdate, ArticleDelete, subscribe, IndexView)
 
 urlpatterns = [
     path('news/', NewsList.as_view(), name='news_list'),
@@ -27,4 +27,6 @@ urlpatterns = [
 
     path('comments/', CommentsList.as_view()),
     path('comments/<int:pk>', CommentDetail.as_view()),
+
+    path('cunt/', IndexView.as_view())
 ]

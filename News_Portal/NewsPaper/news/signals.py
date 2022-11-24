@@ -6,25 +6,25 @@ from django.template.loader import render_to_string
 from .models import Post
 
 
-@receiver(m2m_changed, sender=Post.categories.through)
-def postcreate_notify(instance, sender, **kwargs):
-    for category in instance.categories.all():
-        for user in category.subscribers.all():
-            html_content = render_to_string(
-                'newpub_mail.html',
-                {
-                    'post': instance,
-                    'user': user
-                }
-            )
-            msg = EmailMultiAlternatives(
-                subject=f'{instance.head}',
-                body=instance.text,
-                from_email='timerian.music@yandex.ru',
-                to=[user.email]
-            )
-            msg.attach_alternative(html_content, 'text/html')
-            msg.send()
+# @receiver(m2m_changed, sender=Post.categories.through)
+# def postcreate_notify(instance, sender, **kwargs):
+#     for category in instance.categories.all():
+#         for user in category.subscribers.all():
+#             html_content = render_to_string(
+#                 'newpub_mail.html',
+#                 {
+#                     'post': instance,
+#                     'user': user
+#                 }
+#             )
+#             msg = EmailMultiAlternatives(
+#                 subject=f'{instance.head}',
+#                 body=instance.text,
+#                 from_email='timerian.music@yandex.ru',
+#                 to=[user.email]
+#             )
+#             msg.attach_alternative(html_content, 'text/html')
+#             msg.send()
 
 
 @receiver(post_delete, sender=Post)
